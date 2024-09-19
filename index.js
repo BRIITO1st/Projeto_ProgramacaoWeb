@@ -23,6 +23,18 @@ navigator.geolocation.getCurrentPosition((position) => {
 // atualizar a hora todo segundo
 const btnRegistrarPonto = document.getElementById("btn-registrar-ponto");
 btnRegistrarPonto.addEventListener("click", () => {
+    //TO-DO:
+    //1 - recuperar o select por meio de id ("SELECT-TIPOS-PONTOS")
+    //2 - recuperar o tipo do ultimo ponto que está salvo no localstorage
+    //2.1 - salvamos o tipo na chave "tipoUltimoPonto"
+    //2.2 - conseguimos recuperar um valor do localstorage com o getItem(chave)
+
+    //3 - fazer uma condicional e atribuir o valor do select conforme tabela 
+    // tipo ultimo ponto | valor select
+    // entrada           | intervalo 
+    // intervalo         | volta intervalo 
+    // volta-intervalo   | saida
+    // saida             | entrada
     dialogPonto.showModal();
 });
 
