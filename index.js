@@ -25,10 +25,12 @@ const btnRegistrarPonto = document.getElementById("btn-registrar-ponto");
 btnRegistrarPonto.addEventListener("click", () => {
     //TO-DO:
     //1 - recuperar o select por meio de id ("SELECT-TIPOS-PONTOS")
+    let dialogSelect = document.getElementById("select-tipos-ponto");
     //2 - recuperar o tipo do ultimo ponto que está salvo no localstorage
     //2.1 - salvamos o tipo na chave "tipoUltimoPonto"
     //2.2 - conseguimos recuperar um valor do localstorage com o getItem(chave)
-
+    let ultimoPonto = localStorage.getItem("tipoUltimoPonto");
+    
     //3 - fazer uma condicional e atribuir o valor do select conforme tabela 
     // tipo ultimo ponto | valor select
     // entrada           | intervalo 
