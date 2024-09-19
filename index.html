@@ -3,25 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Sistema de controle de ponto</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <div class="data-hora">
         <p id="dia-semana">Segunda-Feira</p>
-        <p id="dia-mes-ano">05/09/2024</p>
-        <p id="hora-min-seg">09:04:38</p>
+        <p id="dia-mes-ano">27/08/2024</p>
+        <p id="hora-min-seg">08:45:38</p>
     </div>
     <dialog id="dialog-ponto">
         <p>Data</p>
         <p>Hora</p>
-        <button>Entrada</button>
-        <button>Intervalo</button>
-        <button>Volta Intervalo</button>
-        <button>Saida</button>
-        <button id="btn-funcao-fechar">Fechar</button>
+        <select name="select-tipos-ponto" id="select-tipos-ponto">
+            <option value="entrada">Entrada</option>
+            <option value="intervalo">Intervalo</option>
+            <option value="volta-intervalo">Volta Intevalo</option>
+            <option value="saida">Saída</option>
+        </select>
+        <button id="btn-dialog-registrar-ponto">Registrar Ponto</button>
+        <button id="btn-dialog-fechar">X</button>
     </dialog>
-    <button id="btn-registrar-ponto">Registrar ponto!</button>    
+    <button id="btn-registrar-ponto">Registrar ponto!</button>
 
-    <script src="index.js"></script>
+    <script src="js/index.js"></script>
 </body>
 </html>
