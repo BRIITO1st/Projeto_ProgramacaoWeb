@@ -6,7 +6,6 @@ const diaMesAno = document.getElementById("dia-mes-ano");
 const horaMinSeg = document.getElementById("hora-min-seg");
 const arrayDayWeek = ["Domingo","Segunda-feira","Terça-feira","Quarta-feira","Quinta-feira","Sexta-feira","Sabado"]
 
-
 const dialogPonto = document.getElementById("dialog-ponto");
 
 
@@ -17,26 +16,28 @@ navigator.geolocation.getCurrentPosition((position) => {
 });
 
 
+let proxPonto = {
+    "entrada": "intervalo",
+    "intervalo": "volta-intervalo",
+    "volta-intervalo": "saida",
+    "saida": "entrada"
+}
+
+
+let dialogHora = document.getElementById("dialog-hora");
 // TO-DO:
 // apresentar para o usuário a data e hora atualizados
 // atualizar a data todos os dias 00:00
 // atualizar a hora todo segundo
 const btnRegistrarPonto = document.getElementById("btn-registrar-ponto");
 btnRegistrarPonto.addEventListener("click", () => {
-    //TO-DO:
-    //1 - recuperar o select por meio de id ("SELECT-TIPOS-PONTOS")
     let dialogSelect = document.getElementById("select-tipos-ponto");
-    //2 - recuperar o tipo do ultimo ponto que está salvo no localstorage
-    //2.1 - salvamos o tipo na chave "tipoUltimoPonto"
-    //2.2 - conseguimos recuperar um valor do localstorage com o getItem(chave)
     let ultimoPonto = localStorage.getItem("tipoUltimoPonto");
+    dialogSelect.value = proxPonto[ultimoPonto];
     
-    //3 - fazer uma condicional e atribuir o valor do select conforme tabela 
-    // tipo ultimo ponto | valor select
-    // entrada           | intervalo 
-    // intervalo         | volta intervalo 
-    // volta-intervalo   | saida
-    // saida             | entrada
+    
+    //dialogHora.textContent = horaCompleta();
+
     dialogPonto.showModal();
 });
 
@@ -46,6 +47,30 @@ btnDialogFechar.addEventListener("click", () => {
     dialogPonto.close();
 });
 
+
+function recuperaPontosLocalStorage() {
+    let todosOsPontos = localStorage.getItem("registro");
+
+    if(!todosOsPontos) {
+        return [];
+    }
+
+    return JSON.parse(todosOsPontos);
+}
+
+
+
+function salvarRegistroLocalStorage(ponto) {
+    let pontos = recuperaPontosLocalStorage();
+    
+    pontos.push(ponto);
+    // 1 - recuperar os registros anteriores
+    // 2 - adicionar o novo registro (ponto) no final do array de registros
+
+    localStorage.setItem("registro", JSON.stringify(pontos));
+}
+
+const divAlerta = document.getElementById("div-alerta");
 
 const btnDialogRegistrarPonto = document.getElementById("btn-dialog-registrar-ponto");
 btnDialogRegistrarPonto.addEventListener("click", () => {
@@ -62,8 +87,11 @@ btnDialogRegistrarPonto.addEventListener("click", () => {
 
     // TO-DO:
     // Somente o ultimo registro está sendo salvo
-    // como resolver isso, de modo que eu persista todos os pontos?
-    localStorage.setItem("registro", JSON.stringify(ponto));
+    // Garantir que o código persista sempre o histórico todo
+    // Salvar os registros em um array de objetos de registro
+    salvarRegistroLocalStorage(ponto);
+    
+    localStorage.setItem("tipoUltimoPonto", tipoPonto);
 
     // TO-DO:
     // salvar o útimo tipo do ponto registrado pelo usuário
@@ -72,7 +100,15 @@ btnDialogRegistrarPonto.addEventListener("click", () => {
     // Exemplo: usuário registrou "entrada", determinar que o select apresente "intervalo" como valor padrão
 
     console.log(ponto);
-    
+    dialogPonto.close();
+
+    divAlerta.classList.remove("hidden");
+    divAlerta.classList.add("show");
+
+    setTimeout(() => {
+        divAlerta.classList.remove("show");
+        divAlerta.classList.add("hidden");
+    }, 5000);
 });
 
 function daySemana() {
@@ -94,7 +130,15 @@ function atualizaHora() {
     horaMinSeg.textContent = horaCompleta();
 }
 
+function atualizaHoraDialog() {
+    dialogHora.textContent = "Hora: " + horaCompleta();
+}
+
+atualizaHora();
 setInterval(atualizaHora, 1000);
+
+atualizaHoraDialog()
+setInterval(atualizaHoraDialog, 1000);
 
 diaSemana.textContent = daySemana();
 diaMesAno.textContent = dataCompleta();
