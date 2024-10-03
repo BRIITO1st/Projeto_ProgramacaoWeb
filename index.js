@@ -141,4 +141,4 @@ atualizaHoraDialog()
 setInterval(atualizaHoraDialog, 1000);
 
 diaSemana.textContent = daySemana();
-diaMesAno.textContent = dataCompleta();
+diaMesAno.textContent = dataCompleta();x
